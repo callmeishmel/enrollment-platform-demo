@@ -2,19 +2,13 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
     container_name: laravel-app
     restart: unless-stopped
     working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
     depends_on:
       - db
     networks:
       - laravel
-    entrypoint: >
-      bash -c "chown -R www-data:www-data storage bootstrap/cache &&
-              php-fpm"
 
   web:
     image: nginx:stable-alpine
@@ -22,9 +16,6 @@ services:
     restart: unless-stopped
     ports:
       - "8000:80"
-    volumes:
-      - .:/var/www/html
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - app
     networks:
@@ -36,9 +27,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
