@@ -1,3 +1,4 @@
+# Development Deploy
 prepare-dev-env:
 	@if [ -f .env ]; then \
 		echo "\n⚠️  .env already exists — skipping copy from .env.dev.example."; \
@@ -10,34 +11,36 @@ up-dev: prepare-dev-env
 	docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --build
 
 
-
-prepare-prod-env:
-	@if [ -f .env ]; then \
-		echo "\n⚠️  .env already exists — skipping copy from .env.prod.example."; \
-	else \
-		echo "📄 Copying .env.prod.example → .env..."; \
-		cp .env.prod.example .env; \
+# Production Deploy
+warn-if-prod-db-exists:
+	@if docker volume ls | grep -q 'mysql-data'; then \
+		echo "\n⚠️  WARNING: A MySQL volume already exists."; \
+		echo "\n🚨 If you've updated DB credentials, they will NOT take effect unless you remove the volume."; \
 	fi
 
-validate-env:
-	@if grep -q '!!SET_' .env; then \
-		echo "\n❌ ERROR: .env contains unresolved placeholders like '!!SET_'."; \
-		echo "👉 Please update .env before running a production build.\n"; \
+prepare-prod-env: warn-if-prod-db-exists
+	@if [ -f .env ]; then \
+		echo "\n⚠️  .env already exists. Skipping copy."; \
+	else \
+		cp .env.prod.example .env && echo "📄 .env copied from .env.prod.example"; \
+	fi
+
+validate-prod-env:
+	@if [ ! -f .env ]; then \
+		echo "\n❌ ERROR: .env file not found."; \
+		echo "\n⚠️ INFO: Run 'make prepare-prod-env' to copy .env.prod.example file."; \
 		exit 1; \
 	fi
+	@if grep -q '!!SET_' .env; then \
+		echo "\n❌ ERROR: .env contains unresolved placeholders."; \
+		exit 1; \
+	fi
+	@echo "✅ .env is present and valid."
 
-up-prod: prepare-prod-env validate-env
+up-prod: prepare-prod-env validate-prod-env
 	docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --build
 
 
+# General Actions
 down:
 	docker compose down
-
-migrate:
-	docker compose exec app php artisan migrate
-
-bash:
-	docker compose exec app bash
-
-composer-install:
-	docker compose exec app composer install
