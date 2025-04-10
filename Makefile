@@ -37,8 +37,15 @@ validate-prod-env:
 	fi
 	@echo "✅ .env is present and valid."
 
+# Standard Production Deployment (No Reverse Proxy)
+# For deploying directly to a server accessible by IP (e.g., http://domain.com:8000)
 up-prod: prepare-prod-env validate-prod-env
 	docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --build
+
+# Reverse Proxy Deployment (For Custom Subdomain-based Routing)
+# For deploying behind a shared nginx-proxy (e.g., https://sub.domain.com)
+up-prod-proxy: prepare-prod-env validate-prod-env
+	docker compose -f docker-compose.yaml -f docker-compose.proxy.yaml up -d --build
 
 
 # General Actions
