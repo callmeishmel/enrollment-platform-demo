@@ -16,9 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('program_id')->constrained()->onDelete('cascade');
             $table->foreignId('payment_plan_id')->nullable()->constrained()->onDelete('cascade');
-            $table->string('phone');
             $table->string('city');
-            $table->date('start_date');
+            $table->string('state');
+            $table->string('zip_code');
+            $table->string('phone');
+            $table->date('preferred_start_date');
             $table->enum('status', ['submitted', 'under_review', 'approved'])->default('submitted');
             $table->timestamps();
         });
