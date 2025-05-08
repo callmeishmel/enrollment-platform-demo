@@ -53,6 +53,9 @@ class FormStepper extends Component
 
     public function goToNextStep()
     {
+        // Sanitize data before validation
+        $this->formData = FormDataSanitizer::sanitize($this->formData);
+
         // Validate the current step's data
         $this->validate(
             LoanApplicationRules::for($this->currentStep),
@@ -74,17 +77,17 @@ class FormStepper extends Component
 
     public function save()
     {
-        // Sanitize the form data
+        // Sanitize date before validation
         $this->formData = FormDataSanitizer::sanitize($this->formData);
 
-        try {
-            // Validate the final step
-            $this->validate(
-                UserRegistrationRules::base(),
-                messages: [],
-                attributes: UserRegistrationRules::attributes(),
-            );
+        // Validate the final step
+        $this->validate(
+            UserRegistrationRules::base(),
+            messages: [],
+            attributes: UserRegistrationRules::attributes(),
+        );
 
+        try {
             LoanApplicationService::applicationHandler(Auth::user(), $this->formData);
 
             session()->flash('success', 'Your application has been submitted successfully.');
@@ -100,4 +103,3 @@ class FormStepper extends Component
         return view('livewire.loan-application.form-stepper');
     }
 }
- 
