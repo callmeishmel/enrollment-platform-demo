@@ -16,11 +16,11 @@ class Address extends Model
     ];
 
     protected $casts = [
-        'street_address' => 'string',
-        'street_address_2' => 'string',
-        'city'           => 'string',
-        'state'          => 'string',
-        'zip_code'       => 'string',
+        'street_address'    => 'string',
+        'street_address_2'  => 'string',
+        'city'              => 'string',
+        'state'             => 'string',
+        'zip_code'          => 'string',
     ];
 
     public function user()
