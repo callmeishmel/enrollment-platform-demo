@@ -1,14 +1,16 @@
 <div>
-    <div class="mb-5 border-b-2 border-gray-200">
-        <input type="email" id="email" wire:model="formData.email" class="form-input" placeholder="Email"/>
-        <input type="password" id="password" wire:model="formData.password" class="form-input" placeholder="Password"/>
-        <input type="password" id="password_confirmation" wire:model="formData.password_confirmation" class="form-input" placeholder="Confirm Password"/>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <x-floating-input type="text" id="first_name" label="First Name" model="formData.first_name" />
+        <x-floating-input type="text" id="last_name" label="Last Name" model="formData.last_name" />
     </div>
-    <div>
-        <input type="text" id="name" wire:model="formData.name" class="form-input" placeholder="Name" />
-        <input type="text" id="phone" wire:model="formData.phone" class="form-input" placeholder="Phone"/>
-        <input type="text" id="city" wire:model="formData.city" class="form-input" placeholder="City"/>
-        <input type="text" id="state" wire:model="formData.state" class="form-input" placeholder="State"/>
-        <input type="text" id="zip_code" wire:model="formData.zip_code" class="form-input" placeholder="Zip Code"/>
+    <x-floating-input type="text" id="street_address" label="Street Address" model="formData.street_address" />
+    <x-floating-input type="text" id="street_address_2" label="Street Address 2" model="formData.street_address_2" />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <x-floating-input type="tel" id="phone" label="Phone" model="formData.phone" />
+        <x-floating-input type="text" id="city" label="City" model="formData.city" />
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <x-floating-select id="state" label="State" model="formData.state" :options="$states" />
+        <x-floating-input type="text" id="zip_code" label="Zip Code" model="formData.zip_code" />
     </div>
 </div>
