@@ -10,10 +10,6 @@ class Application extends Model
         'user_id',
         'program_id',
         'payment_plan_id',
-        'city',
-        'state',
-        'zip_code',
-        'phone',
         'preferred_start_date',
         'status'
     ];

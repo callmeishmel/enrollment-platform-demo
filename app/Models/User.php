@@ -52,6 +52,21 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function phoneNumber()
+    {
+        return $this->hasMany(PhoneNumber::class);
+    }
+
+    public function address()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function application()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
