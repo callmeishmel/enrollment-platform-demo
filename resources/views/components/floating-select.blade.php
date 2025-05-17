@@ -2,6 +2,9 @@
     <select
         wire:model.defer="{{ $model }}"
         id="{{ $id }}"
+        @isset($mask)
+            x-mask="{{ $mask }}"
+        @endisset
         class="peer w-full border border-gray-300 rounded px-3 pt-5 pb-2 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
         <option value="" hidden></option>

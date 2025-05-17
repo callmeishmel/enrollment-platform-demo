@@ -3,7 +3,10 @@
         type="{{ $type }}"
         id="{{ $id }}"
         wire:model.defer="{{ $model }}"
-        placeholder=" "
+        @isset($mask)
+            x-mask="{{ $mask }}"
+        @endisset
+            placeholder=" "
         class="peer w-full border border-gray-300 rounded px-3 pt-5 pb-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     />
     <label

@@ -12,16 +12,18 @@ class FloatingSelect extends Component
     public string $label;
     public array $options;
     public string $model;
+    public string|null $mask;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $id, string $label, array $options, string $model)
+    public function __construct(string $id, string $label, array $options, string $model, string $mask = null)
     {
-        $this->id = $id;
-        $this->label = $label;
+        $this->id      = $id;
+        $this->label   = $label;
         $this->options = $options;
-        $this->model = $model;
+        $this->model   = $model;
+        $this->mask    = $mask;
     }
 
     /**
