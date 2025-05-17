@@ -10,8 +10,8 @@ class LoanApplicationRules
         switch ($step) {
             case 1:
                 return [
-                    'formData.first_name'            => 'required|string|min:2|max:100',
-                    'formData.last_name'             => 'required|string|min:2|max:100',
+                    'formData.first_name'            => 'required|string|alpha|min:2|max:100',
+                    'formData.last_name'             => 'required|string|alpha|min:2|max:100',
                     'formData.street_address'        => 'required|string|min:5|max:100',
                     'formData.street_address_2'      => 'nullable|string|max:100',
                     'formData.phone'                 => ['required', 'string', 'regex:/^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/'],
