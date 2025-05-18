@@ -4,6 +4,7 @@ namespace App\Livewire\LoanApplication;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 use App\Models\Program;
 use App\Models\PaymentPlan;
@@ -19,7 +20,8 @@ class FormStepper extends Component
     public int $totalSteps = 4;
     public array $states = USStates::STATES;
     public array $programs;
-    public array $paymentPlans;
+    public Collection $paymentPlans;
+    public array $paymentPlanOptions;
 
     public array $steps = [
         1 => 'Personal Information',
@@ -48,7 +50,22 @@ class FormStepper extends Component
     public function mount()
     {
         $this->programs = Program::pluck('name', 'id')->toArray();
-        $this->paymentPlans = PaymentPlan::pluck('name', 'id')->toArray();
+
+        $this->paymentPlans = PaymentPlan::select([
+            'id',
+            'name',
+            'monthly_payment',
+            'duration_months',
+            'interest_rate',
+            'description'
+        ])->get()->keyBy('id');
+
+        $this->paymentPlanOptions = $this->paymentPlans->pluck('name', 'id')->toArray();
+    }
+
+    public function updatedFormDataPaymentPlanId($value)
+    {
+        $this->paymentPlanData = PaymentPlan::find($this->formData['payment_plan_id'])?->toArray();
     }
 
     public function goToNextStep()

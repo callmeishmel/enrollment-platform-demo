@@ -1,6 +1,6 @@
 <div class="relative">
     <select
-        wire:model.defer="{{ $model }}"
+        wire:model.live="{{ $model }}"
         id="{{ $id }}"
         @isset($mask)
             x-mask="{{ $mask }}"
