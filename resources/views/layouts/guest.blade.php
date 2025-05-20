@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,12 +18,14 @@
     @livewireStyles
   </head>
 
-  <body class="font-sans antialiased text-gray-900 bg-white">
+  <body class="flex flex-col min-h-screen font-sans antialiased text-gray-900 bg-white">
     @include('layouts.guest.partials.header')
-    
-    @yield('content')
 
-    {{ $slot ?? ''}}
+    <main class="flex-grow">
+        @yield('content')
+
+        {{ $slot ?? ''}}
+    </main>
 
     @include('layouts.guest.partials.footer')
     <!-- Livewire Scripts -->
