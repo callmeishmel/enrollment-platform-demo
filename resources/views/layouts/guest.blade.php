@@ -23,6 +23,8 @@
     
     @yield('content')
 
+    {{ $slot ?? ''}}
+
     @include('layouts.guest.partials.footer')
     <!-- Livewire Scripts -->
     @livewireScripts
